@@ -15,10 +15,6 @@ idx = Range.new(prenum, Enum.count(values)-1)
 
 target = Enum.at(values, idx) |> IO.inspect
 
-Range.new(1, Enum.count(values)-1) 
-  |> Enum.each(fn last -> Enum.each(0..last-1, fn first -> if (Enum.sum(Enum.slice(values, first..last)) == target), do: IO.puts "#{Enum.min(Enum.slice(values,first..last)) + Enum.max(Enum.slice(values,first..last))}" end) end)
-
-# Functionally nicer, but slower
 range = Enum.flat_map(1..Enum.count(values)-1, fn x -> Enum.map(0..x-1, fn y -> Range.new(y, x) end) end)
   |> Enum.find(fn r -> Enum.sum(Enum.slice(values, r)) == target end) |> IO.inspect
 
